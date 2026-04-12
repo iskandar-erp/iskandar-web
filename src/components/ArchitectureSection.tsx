@@ -19,9 +19,14 @@ export default function ArchitectureSection() {
 
   const treeData = {
     name: 'iskandar/',
+    itemStyle: {
+      borderColor: theme.seriesPrimary,
+      borderWidth: 2,
+    },
     children: [
       {
         name: 'core/',
+        itemStyle: { borderColor: theme.seriesPrimary },
         children: [
           { name: 'ERPClient' },
           { name: 'Registry' },
@@ -29,6 +34,7 @@ export default function ArchitectureSection() {
       },
       {
         name: 'providers/',
+        itemStyle: { borderColor: theme.seriesPrimary },
         children: [
           { name: 'microsip/' },
           { name: '...' },
@@ -36,6 +42,7 @@ export default function ArchitectureSection() {
       },
       {
         name: 'api/',
+        itemStyle: { borderColor: theme.seriesPrimary },
         children: [
           { name: 'FastAPI' },
           { name: 'Routers' },
@@ -43,6 +50,7 @@ export default function ArchitectureSection() {
       },
       {
         name: 'models/',
+        itemStyle: { borderColor: theme.seriesPrimary },
         children: [
           { name: 'Pydantic v2' },
         ],
@@ -66,8 +74,8 @@ export default function ArchitectureSection() {
         top: '15%',
         bottom: '15%',
         orient: 'TB',
-        symbol: 'roundRect',
-        symbolSize: [90, 32],
+    symbol: 'roundRect',
+        symbolSize: [110, 36],
         edgeShape: 'polyline',
         edgeForkPosition: '63%',
         initialTreeDepth: 3,
@@ -76,22 +84,29 @@ export default function ArchitectureSection() {
           color: theme.treeLineColor,
           curveness: 0.5,
         },
+        itemStyle: {
+          borderColor: theme.treeLabel.borderColor,
+          borderWidth: 1.5,
+          color: theme.treeLabel.backgroundColor,
+        },
         label: {
           position: 'inside',
           verticalAlign: 'middle',
-          fontSize: 11,
+          fontSize: 12,
+          fontWeight: 600,
           fontFamily: 'JetBrains Mono',
           color: theme.treeLabel.color,
-          backgroundColor: theme.treeLabel.backgroundColor,
-          borderColor: theme.treeLabel.borderColor,
-          borderWidth: 1,
-          borderRadius: 6,
           padding: [6, 12],
         },
         leaves: {
-          label: {
-            backgroundColor: theme.treeLabelLeaf.backgroundColor,
+          itemStyle: {
             borderColor: theme.treeLabelLeaf.borderColor,
+            color: theme.treeLabelLeaf.backgroundColor,
+          },
+          label: {
+            color: theme.treeLabelLeaf.color,
+            fontSize: 11,
+            fontWeight: 400,
           },
         },
         emphasis: {
@@ -100,6 +115,7 @@ export default function ArchitectureSection() {
             borderColor: theme.seriesPrimary,
             shadowBlur: 15,
             shadowColor: theme.seriesGlow,
+            borderWidth: 2,
           },
         },
         expandAndCollapse: false,

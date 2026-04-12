@@ -1,112 +1,109 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon } from 'lucide-react';
-import { siteContent } from '../data/content';
+import { Menu, X, Github, Moon, Sun } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
-import DcaLogo from './DcaLogo';
+import { siteContent } from '../data/content';
+import IskandarLogo from './IskandarLogo';
 import './Navbar.css';
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const { theme, toggleTheme, isFirstVisit, dismissFirstVisit } = useTheme();
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+  const { nav } = siteContent;
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (isMobileOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => { document.body.style.overflow = ''; };
-  }, [isMobileOpen]);
+  const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <nav id="navbar" className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
-      <div className="navbar__inner container">
+    <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
+      <div className="container navbar__container">
         <a 
-          href="https://portafoliodca.netlify.app/" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="navbar__logo" 
-          aria-label="DCA Portfolio"
+          href="/" 
+          className="navbar__logo"
+          aria-label="Iskandar Home"
         >
-          <DcaLogo size={32} className="navbar__logo-icon" />
-          <span className="navbar__logo-text">DCA</span>
+          <IskandarLogo size={32} className="navbar__logo-icon" />
+          <span className="navbar__logo-text">ISKANDAR</span>
         </a>
 
-        <div className="navbar__links">
-          {siteContent.nav.links.map((link) => (
-            <a key={link.href} href={link.href} className="navbar__link">
-              {link.label}
-            </a>
-          ))}
-        </div>
+        {/* Desktop Nav */}
+        <div className="navbar__desktop">
+          <div className="navbar__links">
+            {nav.links.map((link) => (
+              <a key={link.name} href={link.href} className="navbar__link">
+                {link.name}
+              </a>
+            ))}
+          </div>
 
-        <div className="navbar__actions">
-          <div className="navbar__theme-wrapper">
+          <div className="navbar__actions">
             <button
-              className={`navbar__theme-toggle ${isFirstVisit ? 'navbar__theme-toggle--glow' : ''}`}
               onClick={toggleTheme}
-              onMouseEnter={() => isFirstVisit && dismissFirstVisit()}
+              className="navbar__theme-toggle"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
             </button>
-            {isFirstVisit && (
-              <div className="navbar__theme-tooltip">
-                <span>Cambia entre modo claro y oscuro</span>
-                <button onClick={dismissFirstVisit} className="navbar__tooltip-close">
-                  <X size={14} />
-                </button>
-              </div>
-            )}
+            <a
+              href={nav.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn--primary btn--sm btn--icon"
+            >
+              <Github size={18} />
+              <span>GitHub</span>
+            </a>
           </div>
+        </div>
 
-          <a
-            href="https://github.com/iskandar-erp"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="navbar__cta"
-          >
-            GitHub
-          </a>
-
+        {/* Mobile Toggle */}
+        <div className="navbar__mobile-actions">
           <button
-            className="navbar__mobile-toggle"
-            onClick={() => setIsMobileOpen(!isMobileOpen)}
-            aria-label="Toggle menu"
-            id="mobile-menu-toggle"
+            onClick={toggleTheme}
+            className="navbar__theme-toggle"
+            aria-label="Toggle theme"
           >
-            {isMobileOpen ? <X size={22} /> : <Menu size={22} />}
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+          <button
+            className="navbar__toggle"
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
-      <div className={`navbar__mobile ${isMobileOpen ? 'navbar__mobile--open' : ''}`}>
+      {/* Mobile Menu */}
+      <div className={`navbar__mobile ${isOpen ? 'navbar__mobile--open' : ''}`}>
         <div className="navbar__mobile-links">
-          {siteContent.nav.links.map((link) => (
+          {nav.links.map((link) => (
             <a
-              key={link.href}
+              key={link.name}
               href={link.href}
               className="navbar__mobile-link"
-              onClick={() => setIsMobileOpen(false)}
+              onClick={() => setIsOpen(false)}
             >
-              {link.label}
+              {link.name}
             </a>
           ))}
           <a
-            href="https://github.com"
+            href={nav.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="navbar__mobile-link navbar__mobile-link--cta"
+            className="btn btn--primary btn--full btn--icon"
+            onClick={() => setIsOpen(false)}
           >
-            Ver en GitHub
+            <Github size={18} />
+            <span>GitHub</span>
           </a>
         </div>
       </div>

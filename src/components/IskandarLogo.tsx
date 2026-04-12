@@ -1,10 +1,10 @@
-interface DcaLogoProps {
+interface IskandarLogoProps {
   size?: number;
   className?: string;
   color?: string;
 }
 
-export default function DcaLogo({ size = 40, className = '', color }: DcaLogoProps) {
+export default function IskandarLogo({ size = 40, className = '', color }: IskandarLogoProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -12,7 +12,7 @@ export default function DcaLogo({ size = 40, className = '', color }: DcaLogoPro
       width={size}
       height={size * 1.1}
       className={className}
-      aria-label="DCA Analytics Logo"
+      aria-label="Iskandar Logo"
     >
       {/* Network constellation */}
       <g

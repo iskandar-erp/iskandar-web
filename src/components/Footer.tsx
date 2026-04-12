@@ -1,76 +1,74 @@
-import { MapPin, Scale, ExternalLink } from 'lucide-react';
+import { Github, Twitter, Linkedin, Mail, ExternalLink } from 'lucide-react';
 import { siteContent } from '../data/content';
-import DcaLogo from './DcaLogo';
+import IskandarLogo from './IskandarLogo';
 import './Footer.css';
 
 export default function Footer() {
-  const { footer } = siteContent;
+  const { footer, nav } = siteContent;
   const year = new Date().getFullYear();
 
   return (
-    <footer id="footer" className="footer">
+    <footer className="footer">
       <div className="container">
-        <div className="footer__top">
+        <div className="footer__grid">
           <div className="footer__brand">
-            <a 
-              href="https://portafoliodca.netlify.app/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="footer__logo"
-            >
-              <DcaLogo size={32} className="footer__logo-icon" />
-              <span className="footer__logo-text">DCA</span>
-            </a>
-            <p className="footer__description">{footer.description}</p>
-          </div>
-
-          <div className="footer__links-group">
-            <h4 className="footer__links-title">Proyecto</h4>
-            <a href="#why" className="footer__link">Por qué</a>
-            <a href="#what" className="footer__link">Solución</a>
-            <a href="#ecosystem" className="footer__link">Ecosistema</a>
-            <a href="#architecture" className="footer__link">Arquitectura</a>
-          </div>
-
-          <div className="footer__links-group">
-            <h4 className="footer__links-title">Recursos</h4>
-            <a href="https://github.com/iskandar-erp" target="_blank" rel="noopener noreferrer" className="footer__link">
-              GitHub <ExternalLink size={12} />
-            </a>
-            <a href="#contribute" className="footer__link">Contribuir</a>
-            <a href="#stats" className="footer__link">Estado</a>
-          </div>
-
-          <div className="footer__links-group">
-            <h4 className="footer__links-title">Legal</h4>
-            <div className="footer__meta-item">
-              <Scale size={14} />
-              <span>{footer.license}</span>
+            <div className="footer__logo">
+              <IskandarLogo size={32} className="footer__logo-icon" />
+              <span className="footer__logo-text">ISKANDAR</span>
             </div>
+            <p className="footer__desc">
+              Simplificando la integración de sistemas ERP a través de una arquitectura 
+              robusta, moderna y de código abierto.
+            </p>
+            <div className="footer__socials">
+              <a href={nav.github} target="_blank" rel="noopener noreferrer" className="footer__social-link" aria-label="GitHub">
+                <Github size={20} />
+              </a>
+              <a href="#" className="footer__social-link" aria-label="Twitter">
+                <Twitter size={20} />
+              </a>
+              <a href="#" className="footer__social-link" aria-label="LinkedIn">
+                <Linkedin size={20} />
+              </a>
+            </div>
+          </div>
+
+          <div className="footer__nav">
+            <h4 className="footer__title">Proyecto</h4>
+            <ul className="footer__list">
+              {nav.links.map((link) => (
+                <li key={link.name}>
+                  <a href={link.href} className="footer__link">{link.name}</a>
+                </li>
+              ))}
+              <li><a href={nav.github} target="_blank" rel="noopener noreferrer" className="footer__link">Repositorio</a></li>
+            </ul>
+          </div>
+
+          <div className="footer__nav">
+            <h4 className="footer__title">Autor</h4>
+            <ul className="footer__list">
+              <li>
+                <a href="https://portafoliodca.netlify.app/" target="_blank" rel="noopener noreferrer" className="footer__link footer__link--external">
+                  DCA Portfolio <ExternalLink size={14} />
+                </a>
+              </li>
+              <li>
+                <a href="mailto:contato@dca-analytics.com" className="footer__link footer__link--external">
+                  Contacto <Mail size={14} />
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="footer__divider" />
-
         <div className="footer__bottom">
-          <div className="footer__built-by">
-            <MapPin size={14} />
-            <span>
-              Desarrollado por{' '}
-              <a 
-                href="https://portafoliodca.netlify.app/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="footer__built-link"
-              >
-                {footer.builtBy}
-              </a>{' '}
-              — {footer.location}
-            </span>
+          <div className="footer__copyright">
+            &copy; {year} Iskandar Project. Creado por DCA Analytics.
           </div>
-          <span className="footer__copyright">
-            &copy; {year} DCA Business Intelligence. Open Source bajo {footer.license}.
-          </span>
+          <div className="footer__legal">
+            Open Source bajo {footer.license}.
+          </div>
         </div>
       </div>
     </footer>

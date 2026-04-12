@@ -1,4 +1,4 @@
-import { Github, Twitter, Linkedin, Mail, ExternalLink } from 'lucide-react';
+import { GitPullRequest, Send, Users, Mail, ExternalLink } from 'lucide-react';
 import { siteContent } from '../data/content';
 import IskandarLogo from './IskandarLogo';
 import './Footer.css';
@@ -22,13 +22,13 @@ export default function Footer() {
             </p>
             <div className="footer__socials">
               <a href={nav.github} target="_blank" rel="noopener noreferrer" className="footer__social-link" aria-label="GitHub">
-                <Github size={20} />
+                <GitPullRequest size={20} />
               </a>
               <a href="#" className="footer__social-link" aria-label="Twitter">
-                <Twitter size={20} />
+                <Send size={20} />
               </a>
               <a href="#" className="footer__social-link" aria-label="LinkedIn">
-                <Linkedin size={20} />
+                <Users size={20} />
               </a>
             </div>
           </div>

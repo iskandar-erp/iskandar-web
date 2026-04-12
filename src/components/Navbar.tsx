@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Github, Moon, Sun } from 'lucide-react';
+import { Menu, X, GitPullRequest, Moon, Sun } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { siteContent } from '../data/content';
 import IskandarLogo from './IskandarLogo';
@@ -57,7 +57,7 @@ export default function Navbar() {
               rel="noopener noreferrer"
               className="btn btn--primary btn--sm btn--icon"
             >
-              <Github size={18} />
+              <GitPullRequest size={18} />
               <span>GitHub</span>
             </a>
           </div>
@@ -102,7 +102,7 @@ export default function Navbar() {
             className="btn btn--primary btn--full btn--icon"
             onClick={() => setIsOpen(false)}
           >
-            <Github size={18} />
+            <GitPullRequest size={18} />
             <span>GitHub</span>
           </a>
         </div>

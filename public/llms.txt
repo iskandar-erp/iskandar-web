@@ -1,0 +1,61 @@
+# Iskandar
+
+> Integración open source de ERPs para América Latina. Framework en Rust
+> que expone ERPs heredados (sin API, sin webhooks, con DLLs propietarias)
+> como APIs REST modernas y limpias, detrás de una interfaz universal de
+> provider. Un binario compilado sin dependencias. Licencia AGPL v3.
+
+Iskandar existe porque miles de desarrolladores latinoamericanos necesitan
+conectar ERPs heredados — sin API pública y con documentación desactualizada —
+a dashboards, agentes de IA y automatizaciones modernas. El nombre viene de
+la forma árabe/persa de Alejandro de Macedonia.
+
+## Qué hace
+
+- Abstrae DLLs nativas, protocolos propietarios y bases de datos Firebird
+  detrás del trait `ERPProvider` (Rust).
+- Cada ERP es un provider independiente (un crate por ERP); el provider
+  anuncia qué módulos soporta: clientes, facturas, pedidos, inventario,
+  compras, cuentas por cobrar, contabilidad.
+- Capa HTTP opcional (axum): `GET /api/{provider}/clientes`,
+  `POST /api/{provider}/facturas`, etc. El core también funciona como
+  librería.
+- Se distribuye como binario compilado por plataforma: se descarga, se
+  coloca junto al ERP y funciona — sin runtimes ni dependencias.
+
+## Arquitectura (workspace de Cargo)
+
+- `iskandar-core` — trait ERPProvider, ERPClient universal, modelos
+  compartidos (serde, rust_decimal para dinero, IDs flexibles).
+- `crates/providers/` — un crate por ERP; sus dependencias no contaminan
+  al resto.
+- `iskandar-api` — rutas axum (capa HTTP opcional).
+- `iskandar-cli` — binario `iskandar`: init / serve / test.
+
+## ERPs en el roadmap
+
+- México: Microsip (primer provider, en desarrollo activo — integración
+  vía ApiMicrosip.dll), CONTPAQi, Aspel.
+- Colombia: Siigo, World Office.
+- Perú / Chile: Defontana, Alegra.
+- Centroamérica: Microsip.
+
+## Estado
+
+v0.1.0-alpha — en desarrollo activo. La arquitectura se está definiendo;
+es el momento correcto para influir en el diseño. No es production-ready.
+
+## Contribuir
+
+La contribución más valiosa es un nuevo provider. Flujo: leer
+CONTRIBUTING.md → elegir un ERP que conozcas → implementar el trait
+ERPProvider → abrir un PR.
+
+## Enlaces
+
+- Sitio: https://iskandar.netlify.app/
+- Repositorio: https://github.com/iskandar-erp/iskandar
+- Autor: DCA Analytics (Tlalnepantla, Estado de México) —
+  https://portafoliodca.netlify.app/
+- Contacto: Albertolauren@hotmail.com, malbert.quintana@gmail.com
+- Licencia: AGPL v3 — https://www.gnu.org/licenses/agpl-3.0.html

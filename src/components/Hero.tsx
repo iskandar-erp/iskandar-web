@@ -42,7 +42,7 @@ export default function Hero() {
 
         <div className={`hero__actions ${mounted ? 'hero__actions--visible' : ''}`}>
           <a
-            href="https://github.com/iskandar-erp"
+            href={siteContent.nav.github}
             target="_blank"
             rel="noopener noreferrer"
             className="hero__cta hero__cta--primary"
@@ -62,14 +62,14 @@ export default function Hero() {
             <div className="hero__code-dots">
               <span /><span /><span />
             </div>
-            <span className="hero__code-filename">main.py</span>
+            <span className="hero__code-filename">main.rs</span>
           </div>
           <pre className="hero__code-body">
             <code>
-              <span className="code-kw">from</span> <span className="code-mod">iskandar</span> <span className="code-kw">import</span> <span className="code-cls">ERPClient</span>{'\n'}
+              <span className="code-kw">use</span> <span className="code-mod">iskandar</span>::<span className="code-cls">ERPClient</span>;{'\n'}
               {'\n'}
-              <span className="code-var">erp</span> <span className="code-op">=</span> <span className="code-cls">ERPClient</span>(<span className="code-param">provider</span><span className="code-op">=</span><span className="code-str">"microsip"</span>){'\n'}
-              <span className="code-var">factura</span> <span className="code-op">=</span> <span className="code-kw">await</span> <span className="code-var">erp</span>.<span className="code-fn">facturas</span>.<span className="code-fn">crear</span>(<span className="code-param">cliente_id</span><span className="code-op">=</span><span className="code-num">1042</span>)
+              <span className="code-kw">let</span> <span className="code-var">erp</span> <span className="code-op">=</span> <span className="code-cls">ERPClient</span>::<span className="code-fn">new</span>(<span className="code-str">"microsip"</span>, <span className="code-op">&amp;</span><span className="code-var">config</span>)<span className="code-op">?</span>;{'\n'}
+              <span className="code-kw">let</span> <span className="code-var">factura</span> <span className="code-op">=</span> <span className="code-var">erp</span>.<span className="code-fn">facturas</span>()<span className="code-op">?</span>.<span className="code-fn">crear</span>(<span className="code-var">nueva_factura</span>)<span className="code-op">?</span>;
             </code>
           </pre>
         </div>

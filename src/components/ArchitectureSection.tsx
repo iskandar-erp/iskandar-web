@@ -1,5 +1,5 @@
 import ReactECharts from 'echarts-for-react';
-import { Cpu, Boxes, Network, Database } from 'lucide-react';
+import { Cpu, Boxes, Network, Terminal } from 'lucide-react';
 import { siteContent } from '../data/content';
 import { useInView } from '../hooks/useInView';
 import { useChartTheme } from '../hooks/useChartTheme';
@@ -9,7 +9,7 @@ const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
   Cpu,
   Boxes,
   Network,
-  Database,
+  Terminal,
 };
 
 export default function ArchitectureSection() {
@@ -25,34 +25,34 @@ export default function ArchitectureSection() {
     },
     children: [
       {
-        name: 'core/',
+        name: 'iskandar-core',
         itemStyle: { borderColor: theme.seriesPrimary },
         children: [
+          { name: 'trait ERPProvider' },
           { name: 'ERPClient' },
-          { name: 'Registry' },
+          { name: 'Modelos (serde)' },
         ],
       },
       {
         name: 'providers/',
         itemStyle: { borderColor: theme.seriesPrimary },
         children: [
-          { name: 'microsip/' },
+          { name: 'iskandar-microsip' },
           { name: '...' },
         ],
       },
       {
-        name: 'api/',
+        name: 'iskandar-api',
         itemStyle: { borderColor: theme.seriesPrimary },
         children: [
-          { name: 'FastAPI' },
-          { name: 'Routers' },
+          { name: 'axum' },
         ],
       },
       {
-        name: 'models/',
+        name: 'iskandar-cli',
         itemStyle: { borderColor: theme.seriesPrimary },
         children: [
-          { name: 'Pydantic v2' },
+          { name: 'init / serve / test' },
         ],
       },
     ],
@@ -69,13 +69,13 @@ export default function ArchitectureSection() {
       {
         type: 'tree',
         data: [treeData],
-        left: '10%',
-        right: '10%',
-        top: '15%',
-        bottom: '15%',
-        orient: 'TB',
-    symbol: 'roundRect',
-        symbolSize: [110, 36],
+        left: '14%',
+        right: '20%',
+        top: '4%',
+        bottom: '4%',
+        orient: 'LR',
+        symbol: 'roundRect',
+        symbolSize: [128, 30],
         edgeShape: 'polyline',
         edgeForkPosition: '63%',
         initialTreeDepth: 3,
@@ -204,7 +204,7 @@ export default function ArchitectureSection() {
           </div>
           <div className="architecture__flow-step">
             <span className="architecture__flow-tag">API</span>
-            <span className="architecture__flow-label">REST / HTTP</span>
+            <span className="architecture__flow-label">REST / HTTP (axum)</span>
           </div>
         </div>
       </div>

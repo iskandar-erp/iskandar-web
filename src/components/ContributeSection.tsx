@@ -57,7 +57,7 @@ export default function ContributeSection() {
               Si tu ERP está en la lista — o no está — puedes construir un provider para él.
             </p>
             <a
-              href="https://github.com"
+              href={siteContent.nav.github}
               target="_blank"
               rel="noopener noreferrer"
               className="contribute__cta-btn"

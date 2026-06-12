@@ -35,7 +35,7 @@ export default function WhatSection() {
               <div className="what__code-dots">
                 <span /><span /><span />
               </div>
-              <span className="what__code-tab">main.py</span>
+              <span className="what__code-tab">main.rs</span>
             </div>
             <pre className="what__code-body">
               <code>{what.codeExample}</code>

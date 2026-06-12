@@ -4,7 +4,7 @@ export const siteContent = {
     tagline: 'El mismo fuego, traducido.',
     subtitle: 'Integración open source de ERPs para América Latina.',
     description:
-      'Framework Python que expone ERPs heredados como APIs REST modernas y limpias. Una interfaz universal para cualquier ERP.',
+      'Framework en Rust que expone ERPs heredados como APIs REST modernas y limpias. Un binario sin dependencias. Una interfaz universal para cualquier ERP.',
     ctaPrimary: 'Ver en GitHub',
     ctaSecondary: 'Explorar Docs',
   },
@@ -23,19 +23,19 @@ export const siteContent = {
     title: 'Qué hace Iskandar',
     subtitle:
       'Abstrae los detalles de implementación — DLLs nativas, protocolos propietarios, bases de datos Firebird — detrás de una interfaz universal.',
-    codeExample: `from iskandar import ERPClient
+    codeExample: `use iskandar::ERPClient;
 
-erp = ERPClient(provider="microsip", config=settings)
+let erp = ERPClient::new("microsip", &config)?;
 
-factura = await erp.facturas.crear(
-    cliente_id=1042,
-    renglones=[
-        {"articulo_id": 88, "unidades": 3, "precio": 450.00}
-    ]
-)
+let factura = erp.facturas()?.crear(NuevaFactura {
+    cliente_id: 1042,
+    renglones: vec![
+        Renglon { articulo_id: 88, unidades: 3.0, precio: 450.00 },
+    ],
+})?;
 
-# Una interfaz. Cualquier ERP.
-print(f"Factura {factura.folio} creada exitosamente")`,
+// Una interfaz. Cualquier ERP.
+println!("Factura {} creada exitosamente", factura.folio);`,
     features: [
       {
         title: 'Interfaz Universal',
@@ -49,12 +49,12 @@ print(f"Factura {factura.folio} creada exitosamente")`,
       },
       {
         title: 'API REST',
-        description: 'Capa HTTP opcional con FastAPI. Expone tu ERP al mundo moderno en minutos.',
+        description: 'Capa HTTP opcional con axum. Expone tu ERP al mundo moderno en minutos.',
         icon: 'Globe',
       },
       {
-        title: 'Modelos Pydantic',
-        description: 'Validación estricta con Pydantic v2. Type-safe de principio a fin.',
+        title: 'Rust de punta a punta',
+        description: 'Un binario compilado sin dependencias: lo descargas, lo pones junto a tu ERP y funciona. Type-safe con serde.',
         icon: 'Shield',
       },
     ],
@@ -79,24 +79,24 @@ print(f"Factura {factura.folio} creada exitosamente")`,
       'La interfaz ERPProvider define el contrato. Los providers lo implementan. Al core no le importa cómo.',
     modules: [
       {
-        name: 'core/',
-        description: 'ERPClient universal + registro de providers',
+        name: 'iskandar-core',
+        description: 'El trait ERPProvider, el ERPClient universal y los modelos compartidos',
         icon: 'Cpu',
       },
       {
         name: 'providers/',
-        description: 'Un módulo por implementación de ERP',
+        description: 'Un crate independiente por ERP — sus dependencias no contaminan al resto',
         icon: 'Boxes',
       },
       {
-        name: 'api/',
-        description: 'Routers FastAPI (capa HTTP opcional)',
+        name: 'iskandar-api',
+        description: 'Rutas axum (capa HTTP opcional)',
         icon: 'Network',
       },
       {
-        name: 'models/',
-        description: 'Modelos compartidos Pydantic v2',
-        icon: 'Database',
+        name: 'iskandar-cli',
+        description: 'El binario iskandar: init / serve / test',
+        icon: 'Terminal',
       },
     ],
   },
@@ -147,7 +147,7 @@ print(f"Factura {factura.folio} creada exitosamente")`,
     license: 'AGPL v3',
   },
   nav: {
-    github: 'https://github.com/dca-analytics/iskandar',
+    github: 'https://github.com/iskandar-erp/iskandar',
     links: [
       { name: 'Problema', href: '#why' },
       { name: 'Solución', href: '#what' },

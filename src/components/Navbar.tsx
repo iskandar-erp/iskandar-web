@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, GitPullRequest, Moon, Sun } from 'lucide-react';
+import { Menu, X, Moon, Sun } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { siteContent } from '../data/content';
 import IskandarLogo from './IskandarLogo';
@@ -8,7 +8,7 @@ import './Navbar.css';
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, isFirstVisit, dismissFirstVisit } = useTheme();
   const { nav } = siteContent;
 
   useEffect(() => {
@@ -19,13 +19,11 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-
   return (
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
-      <div className="container navbar__container">
-        <a 
-          href="/" 
+      <div className="container navbar__inner">
+        <a
+          href="/"
           className="navbar__logo"
           aria-label="Iskandar Home"
         >
@@ -33,48 +31,47 @@ export default function Navbar() {
           <span className="navbar__logo-text">ISKANDAR</span>
         </a>
 
-        {/* Desktop Nav */}
-        <div className="navbar__desktop">
-          <div className="navbar__links">
-            {nav.links.map((link) => (
-              <a key={link.name} href={link.href} className="navbar__link">
-                {link.name}
-              </a>
-            ))}
-          </div>
+        <div className="navbar__links">
+          {nav.links.map((link) => (
+            <a key={link.name} href={link.href} className="navbar__link">
+              {link.name}
+            </a>
+          ))}
+        </div>
 
-          <div className="navbar__actions">
+        <div className="navbar__actions">
+          <div className="navbar__theme-wrapper">
             <button
               onClick={toggleTheme}
-              className="navbar__theme-toggle"
+              className={`navbar__theme-toggle ${isFirstVisit ? 'navbar__theme-toggle--glow' : ''}`}
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
             </button>
-            <a
-              href={nav.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn--primary btn--sm btn--icon"
-            >
-              <GitPullRequest size={18} />
-              <span>GitHub</span>
-            </a>
+            {isFirstVisit && (
+              <div className="navbar__theme-tooltip">
+                <span>¿Prefieres modo claro? Cámbialo aquí.</span>
+                <button
+                  className="navbar__tooltip-close"
+                  onClick={dismissFirstVisit}
+                  aria-label="Cerrar aviso"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+            )}
           </div>
-        </div>
-
-        {/* Mobile Toggle */}
-        <div className="navbar__mobile-actions">
-          <button
-            onClick={toggleTheme}
-            className="navbar__theme-toggle"
-            aria-label="Toggle theme"
+          <a
+            href={nav.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="navbar__cta"
           >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
+            GitHub
+          </a>
           <button
-            className="navbar__toggle"
-            onClick={toggleMenu}
+            className="navbar__mobile-toggle"
+            onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -99,11 +96,10 @@ export default function Navbar() {
             href={nav.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn--primary btn--full btn--icon"
+            className="navbar__mobile-link navbar__mobile-link--cta"
             onClick={() => setIsOpen(false)}
           >
-            <GitPullRequest size={18} />
-            <span>GitHub</span>
+            GitHub
           </a>
         </div>
       </div>

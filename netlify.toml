@@ -1,0 +1,11 @@
+# Build en Netlify CI (Linux, sin Chrome del sistema):
+# - PLAYWRIGHT_BROWSERS_PATH=0 instala el navegador dentro de
+#   node_modules, que Netlify SÍ cachea entre builds.
+# - El comando instala el Chromium de Playwright antes del build para
+#   que scripts/prerender.mjs genere el HTML completo (bots/IAs sin JS).
+[build]
+  command = "npx playwright install chromium && npm run build"
+  publish = "dist"
+
+[build.environment]
+  PLAYWRIGHT_BROWSERS_PATH = "0"
